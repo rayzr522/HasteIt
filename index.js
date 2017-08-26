@@ -14,7 +14,11 @@ console.log('Logging in...');
 client.login(config.token);
 
 client.on('ready', () => {
-    console.log(`Connected to Discord as ${client.user.tag} (${client.user.id})`);
+    console.log(`Connected to Discord as ${client.user.tag} (ID: ${client.user.id})`);
+
+    if (!client.user.bot) {
+        console.log('Running under a user account, selfbot mode activated.');
+    }
 });
 
 client.on('message', async message => {
@@ -23,6 +27,11 @@ client.on('message', async message => {
     }
 
     if (message.author.bot) {
+        return;
+    }
+
+    if (!client.user.bot && message.author.id !== client.user.id) {
+        // Work as a selfbot, too.
         return;
     }
 
