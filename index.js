@@ -22,7 +22,7 @@ client.on('ready', () => {
 });
 
 client.on('message', async message => {
-    if (!message.guild || !message.guild.id) {
+    if (client.user.bot && (!message.guild || !message.guild.id)) {
         return;
     }
 
